@@ -6,7 +6,19 @@ export default function moreUsefulDecorators() {
     };
   }
 
-  @Logger("LOGGING - PERSON")
+  function WithTemplate(template: string, hookId: string) {
+    return function (constructor: new (...args: any[]) => any) {
+      const p = new constructor();
+      const hookEl = document.getElementById(hookId);
+      if (hookEl) {
+        hookEl.innerHTML = template;
+        hookEl.querySelector("h1")!.textContent = p.name;
+      }
+    };
+  }
+
+  //@Logger("LOGGING - PERSON")
+  @WithTemplate("<h1>My Person Object</h1>", "app")
   class Person {
     name = "Max";
 
